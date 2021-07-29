@@ -1,5 +1,6 @@
 package com.fatemeh.quizapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.graphics.Typeface
@@ -18,11 +19,15 @@ class QusetionAcitivity : AppCompatActivity() ,View.OnClickListener{
     private var mCurrrentPos:Int=1
     private  var mQuestionList:ArrayList<Question>? =null
     private var mselectedoption:Int=0
+    private var mCorrectAnswer:Int=0
+    private var mUserName:String?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qusetion_acitivity)
+
+        mUserName=intent.getStringExtra(Constants.USER_NAME)
         mQuestionList=Constants.getQuestions()
        // Log.i("quesion size","${questionList.size}")
          setQuestion()
@@ -105,13 +110,22 @@ private fun defaultOPtionsView(){
                            setQuestion()
 
                        }else->{
-                       Toast.makeText(this, "you are done", Toast.LENGTH_SHORT).show()
+                       //Toast.makeText(this, "you are done", Toast.LENGTH_SHORT).show()
+
+                           val intent=Intent(this,ResultActivity::class.java)
+                           intent.putExtra(Constants.USER_NAME,mUserName)
+                       intent.putExtra(Constants.CORRECT_ANSWERS,mCorrectAnswer)
+                       intent.putExtra(Constants.TOTAL_QUESTIONS,mQuestionList!!.size)
+                       startActivity(intent)
+                       finish()
                        }
                    }
                }else{
                    val question=mQuestionList?.get(mCurrrentPos-1)
                    if (question!!.correctAnswer!=mselectedoption){
                        answerView(mselectedoption,R.drawable.wrong_option_border_bg)
+                   }else{
+                       mCorrectAnswer++
                    }
                    answerView(question.correctAnswer,R.drawable.correct_option_border_bg)
                    if(mCurrrentPos==mQuestionList!!.size){

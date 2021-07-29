@@ -9,10 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp">
-        <activity android:name=".QusetionAcitivity"
+        <activity android:name=".ResultActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            >
 
-           >
+        </activity>
+        <activity
+            android:name=".QusetionAcitivity"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
